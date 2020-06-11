@@ -1,0 +1,29 @@
+{
+  "name": "charts",
+  "version": "1.0.0",
+  "description": "Collection of Charts and Data Visualizations",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MartinHeinz/charts.git"
+  },
+  "keywords": [
+    "d3",
+    "plot",
+    "chart",
+    "data-science"
+  ],
+  "author": "Martin Heinz",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/MartinHeinz/charts/issues"
+  },
+  "homepage": "https://github.com/MartinHeinz/charts#readme",
+  "dependencies": {
+    "csv": "^5.3.2",
+    "d3": "^5.16.0"
+  }
+}
