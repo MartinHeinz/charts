@@ -1,8 +1,16 @@
-const fs = require('fs');
-const parse = require('csv-parse/lib/sync');
+import * as fs from 'fs';
+import parse from 'csv-parse/lib/sync.js';
 
-async function parse_suicide_stats(){
-    const content = await fs.readFile(`./data/who_suicide_statistics.csv`);
+function array_to_csv(data, out) {
+    for (const row of data) {
+        let csv_row = row.join(",");
+        csv_row += "\n";
+        fs.appendFileSync(out, csv_row, {encoding: 'utf8'})
+    }
+}
+
+function parse_suicide_stats(){
+    const content = fs.readFileSync(`./data/who_suicide_statistics.csv`);
     const records = parse(content);
 
     let result = {};
@@ -34,7 +42,7 @@ async function parse_suicide_stats(){
 
         table.push([key, ...row])
     }
-    console.log(table);
+    array_to_csv("./data/who_suicide_stats.csv");
 }
 
 
@@ -74,7 +82,6 @@ function clean_oecd_data(input, output, indicators) {
                         result.push(rows[i]);
                     }
                 }
-                console.log(result);
                 fs.writeFileSync(output, result.join(""), {encoding: 'utf8'});
             });
         }
@@ -83,23 +90,29 @@ function clean_oecd_data(input, output, indicators) {
     });
 }
 
-clean_oecd_data('./data/ICT_HH2_13062020143325255.csv', './data/ICT_HH2_13062020143325255_H1K.csv', ["H1K", "IND_TOTAL"]);
-clean_oecd_data('./data/BROADBAND_DB_11062020214338289.csv', './data/BROADBAND_DB_11062020214338289_BB-P100-FIB.csv', ["BB-P100-FIB"]);
+// clean_oecd_data('./data/ICT_HH2_13062020143325255.csv', './data/ICT_HH2_13062020143325255_H1K.csv', ["H1K", "IND_TOTAL"]);
+// clean_oecd_data('./data/BROADBAND_DB_11062020214338289.csv', './data/BROADBAND_DB_11062020214338289_BB-P100-FIB.csv', ["BB-P100-FIB"]);
 
-function parse_ict_h1k_data(y){
-    let content = fs.readFileSync(`./data/ICT_HH2_13062020143325255_H1K.csv`, "utf8");
+function parse_oedc_data(file, y, out){
+    let content = fs.readFileSync(file, "utf8");
     const records = parse(content);
 
     let result = [];
     for (const row of records) {
-        let year = row[7];
-        let percentage = row[14];
+        let year = row[5];  // row[7] for ICT_HH2_13062020143325255_H1K
+        let percentage = row[12];  // row[14] for ICT_HH2_13062020143325255_H1K
         let country = row[1];
+        console.log(row);
         if (year === y) {
             result.push([country, percentage])
         }
     }
-    console.log(result);
+    array_to_csv(result, `./data/${out}`);
 }
 
-parse_ict_h1k_data("2019");
+
+parse_oedc_data("./data/ICT_HH2_13062020143325255_H1K.csv", "2012", "ICT_HH2_13062020143325255_H1K_2012.csv");
+parse_oedc_data("./data/ICT_HH2_13062020143325255_H1K.csv", "2019", "ICT_HH2_13062020143325255_H1K_2019.csv");
+parse_oedc_data("./data/BROADBAND_DB_11062020214338289_BB-P100-FIB.csv", "2018", "BROADBAND_DB_11062020214338289_BB-P100-FIB_2018.csv");
+parse_oedc_data("./data/BROADBAND_DB_11062020214338289_BB-P100-FIB.csv", "2016", "BROADBAND_DB_11062020214338289_BB-P100-FIB_2016.csv");
+parse_suicide_stats();
