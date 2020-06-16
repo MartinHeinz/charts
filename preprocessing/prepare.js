@@ -10,7 +10,7 @@ function array_to_csv(data, out) {
 }
 
 function parse_suicide_stats(){
-    const content = fs.readFileSync(`./data/who_suicide_statistics.csv`);
+    const content = fs.readFileSync(`../data/who_suicide_statistics.csv`);
     const records = parse(content);
 
     let result = {};
@@ -42,7 +42,7 @@ function parse_suicide_stats(){
 
         table.push([key, ...row])
     }
-    array_to_csv("./data/who_suicide_stats.csv");
+    array_to_csv("../data/who_suicide_stats.csv");
 }
 
 
@@ -90,8 +90,8 @@ function clean_oecd_data(input, output, indicators) {
     });
 }
 
-// clean_oecd_data('./data/ICT_HH2_13062020143325255.csv', './data/ICT_HH2_13062020143325255_H1K.csv', ["H1K", "IND_TOTAL"]);
-// clean_oecd_data('./data/BROADBAND_DB_11062020214338289.csv', './data/BROADBAND_DB_11062020214338289_BB-P100-FIB.csv', ["BB-P100-FIB"]);
+// clean_oecd_data('../data/ICT_HH2_13062020143325255.csv', '../data/ICT_HH2_13062020143325255_H1K.csv', ["H1K", "IND_TOTAL"]);
+// clean_oecd_data('../data/BROADBAND_DB_11062020214338289.csv', '../data/BROADBAND_DB_11062020214338289_BB-P100-FIB.csv', ["BB-P100-FIB"]);
 
 function parse_oedc_data(file, y, out){
     let content = fs.readFileSync(file, "utf8");
@@ -107,12 +107,12 @@ function parse_oedc_data(file, y, out){
             result.push([country, percentage])
         }
     }
-    array_to_csv(result, `./data/${out}`);
+    array_to_csv(result, `../data/${out}`);
 }
 
 
-parse_oedc_data("./data/ICT_HH2_13062020143325255_H1K.csv", "2012", "ICT_HH2_13062020143325255_H1K_2012.csv");
-parse_oedc_data("./data/ICT_HH2_13062020143325255_H1K.csv", "2019", "ICT_HH2_13062020143325255_H1K_2019.csv");
-parse_oedc_data("./data/BROADBAND_DB_11062020214338289_BB-P100-FIB.csv", "2018", "BROADBAND_DB_11062020214338289_BB-P100-FIB_2018.csv");
-parse_oedc_data("./data/BROADBAND_DB_11062020214338289_BB-P100-FIB.csv", "2016", "BROADBAND_DB_11062020214338289_BB-P100-FIB_2016.csv");
+parse_oedc_data("../data/ICT_HH2_13062020143325255_H1K.csv", "2012", "ICT_HH2_13062020143325255_H1K_2012.csv");
+parse_oedc_data("../data/ICT_HH2_13062020143325255_H1K.csv", "2019", "ICT_HH2_13062020143325255_H1K_2019.csv");
+parse_oedc_data("../data/BROADBAND_DB_11062020214338289_BB-P100-FIB.csv", "2018", "BROADBAND_DB_11062020214338289_BB-P100-FIB_2018.csv");
+parse_oedc_data("../data/BROADBAND_DB_11062020214338289_BB-P100-FIB.csv", "2016", "BROADBAND_DB_11062020214338289_BB-P100-FIB_2016.csv");
 parse_suicide_stats();

@@ -24,7 +24,6 @@
   "homepage": "https://github.com/MartinHeinz/charts#readme",
   "type": "module",
   "dependencies": {
-    "csv": "^5.3.2",
-    "d3": "^5.16.0"
+    "csv": "^5.3.2"
   }
 }

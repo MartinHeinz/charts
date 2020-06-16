@@ -1,4 +1,4 @@
-let height = 300;
+let height = 400;
 let width = 1000;
 let margin = ({top: 0, right: 40, bottom: 34, left: 40});
 
@@ -11,7 +11,7 @@ let xAxis = d3.axisBottom(xScale)
 
 var colors = d3.scaleOrdinal()
     .domain(["asia", "africa", "northAmerica", "europe", "southAmerica", "oceania"])
-    .range(['#e41a1c','#377eb8','#4daf4a','#984ea3','#ff7f00','#ffff33']);
+    .range(['#D81B60','#1976D2','#388E3C','#FBC02D','#E64A19','#455A64']);
 
 d3.select("#africaColor").style("color", colors("africa"));
 d3.select("#namericaColor").style("color", colors("northAmerica"));
@@ -107,7 +107,7 @@ d3.csv("http://localhost:8000/data/who_suicide_stats.csv").then(function (data) 
                 return xScale(+d[variable]);
             }).strength(2))
             .force("y", d3.forceY((height / 2) - margin.bottom / 2))
-            .force("collide", d3.forceCollide(4))
+            .force("collide", d3.forceCollide(10))
             .stop();
 
         for (let i = 0; i < dataSet.length; ++i) {
@@ -129,7 +129,7 @@ d3.csv("http://localhost:8000/data/who_suicide_stats.csv").then(function (data) 
             .attr("class", "countries")
             .attr("cx", 0)
             .attr("cy", (height / 2) - margin.bottom / 2)
-            .attr("r", 3)
+            .attr("r", 6)
             .attr("fill", function(d){ return colors(d.continent)})
             .merge(countriesCircles)
             .transition()
