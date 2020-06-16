@@ -22,8 +22,9 @@
         }
 
         #checkboxes > * {
-            color: darkslategray;
             font-size: 14px;
+            display: inline;
+            padding-top: 3px;
         }
 
         .btn-group {
@@ -95,19 +96,31 @@
 <div id="svganchor" class="graph">
 </div>
 <div id="checkboxes" class="centered">
-    <span>Click to hide/show:&nbsp;&nbsp;</span>
-    <label><input type="checkbox" name="continent" value="africa" checked="">Africa
-        <span id="africaColor" style="font-size: 20px; color: #1976D2;">&#9679;&nbsp;&nbsp;</span></label>
-    <label><input type="checkbox" name="continent" value="northAmerica" checked="">North America
-        <span id="namericaColor" style="font-size: 20px; color: #388E3C;">&#9679;&nbsp;&nbsp;</span></label>
-    <label><input type="checkbox" name="continent" value="southAmerica" checked="">South America
-        <span id="samericaColor" style="font-size: 20px; color: #E64A19;">&#9679;&nbsp;&nbsp;</span></label>
-    <label><input type="checkbox" name="continent" value="asia" checked="">Asia
-        <span id="asiaColor" style="font-size: 20px; color: #D81B60;">&#9679;&nbsp;&nbsp;</span></label>
-    <label><input type="checkbox" name="continent" value="europe" checked="">Europe
-        <span id="europeColor" style="font-size: 20px; color: #FBC02D;">&#9679;&nbsp;&nbsp;</span></label>
-    <label><input type="checkbox" name="continent" value="oceania" checked="">Oceania
-        <span id="oceaniaColor" style="font-size: 20px; color: #455A64;">&#9679;&nbsp;&nbsp;</span></label>
+    <span style="position:relative; top: 3px">Click to hide/show:&nbsp;&nbsp;</span>
+    <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect">
+        <input type="checkbox" name="continent" value="africa" class="mdl-checkbox__input" checked="">Africa
+        <span class="mdl-checkbox__label" id="africaColor" style="font-size: 20px; color: #1976D2;">&#9679;&nbsp;&nbsp;</span>
+    </label>
+    <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect">
+        <input type="checkbox" name="continent" value="northAmerica" class="mdl-checkbox__input" checked="">North America
+        <span class="mdl-checkbox__label" id="namericaColor" style="font-size: 20px; color: #388E3C;">&#9679;&nbsp;&nbsp;</span>
+    </label>
+    <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect">
+        <input type="checkbox" name="continent" value="southAmerica" class="mdl-checkbox__input" checked="">South America
+        <span class="mdl-checkbox__label" id="samericaColor" style="font-size: 20px; color: #E64A19;">&#9679;&nbsp;&nbsp;</span>
+    </label>
+    <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect">
+        <input type="checkbox" name="continent" value="asia" class="mdl-checkbox__input" checked="">Asia
+        <span class="mdl-checkbox__label" id="asiaColor" style="font-size: 20px; color: #D81B60;">&#9679;&nbsp;&nbsp;</span>
+    </label>
+    <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect">
+        <input type="checkbox" name="continent" value="europe" class="mdl-checkbox__input" checked="">Europe
+        <span class="mdl-checkbox__label" id="europeColor" style="font-size: 20px; color: #FBC02D;">&#9679;&nbsp;&nbsp;</span>
+    </label>
+    <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect">
+        <input type="checkbox" name="continent" value="oceania" class="mdl-checkbox__input" checked="">Oceania
+        <span class="mdl-checkbox__label" id="oceaniaColor" style="font-size: 20px; color: #455A64;">&#9679;&nbsp;&nbsp;</span>
+    </label>
 </div>
 </body>
 
