@@ -13,7 +13,7 @@
 
         .centered {
             display: table;
-            margin: 0 auto;
+            margin: 20px auto;
         }
 
         .graph {
@@ -41,7 +41,7 @@
             display:block;
         }
 
-        .button1, .button2 {
+        .count, .scale {
         }
 
         svg {
@@ -56,12 +56,13 @@
         div.tooltip {
             position: absolute;
             text-align: left;
+            color: white;
             font-family: "PT Sans", sans-serif;
             white-space: normal;
             padding: 6px;
             font-size: 14px;
-            background: #eee;
-            border: 1px solid gray;
+            background: rgb(96,125,139);
+            border: 1px solid rgb(96,125,139);
             border-radius: 2px;
             pointer-events: none;
             cursor: none;
@@ -71,12 +72,21 @@
         .axis path,
         .axis line {
             fill: none;
-            stroke: #aaa;
+            stroke: rgb(96,125,139);
             shape-rendering: crispEdges;
         }
 
         .axis text {
             font: 10px sans-serif;
+        }
+
+        .continent {
+
+        }
+
+        .legend {
+            fill: rgba(0,0,0,.87);
+
         }
 
     </style>
@@ -85,40 +95,40 @@
 <body>
 <div class="centered" style="padding-top: 25px">
     <div class="btn-group" data-toggle="buttons-radio">
-        <button type="button" class="button1 mdl-button mdl-js-button mdl-button--raised mdl-button--colored" value="total">Total</button>
-        <button type="button" class="button1 mdl-button mdl-js-button mdl-button--raised mdl-button--colored" value="perCapita">Per Capita</button>
+        <button type="button" class="count mdl-button mdl-js-button mdl-button--raised mdl-button--colored" value="total">Total</button>
+        <button type="button" class="count mdl-button mdl-js-button mdl-button--raised mdl-button--colored" value="perCapita">Per Capita</button>
     </div>
     <div class="btn-group2" data-toggle="buttons-radio">
-        <button type="button" class="button2 mdl-button mdl-js-button mdl-button--raised mdl-button--colored" value="scaleLinear">Linear Scale</button>
-        <button type="button" class="button2 mdl-button mdl-js-button mdl-button--raised mdl-button--colored" value="scaleLog">Log Scale</button>
+        <button type="button" class="scale mdl-button mdl-js-button mdl-button--raised mdl-button--colored" value="scaleLinear">Linear Scale</button>
+        <button type="button" class="scale mdl-button mdl-js-button mdl-button--raised mdl-button--colored" value="scaleLog">Log Scale</button>
     </div>
 </div>
-<div id="svganchor" class="graph">
+<div id="svganchor" class="graph centered">
 </div>
 <div id="checkboxes" class="centered">
-    <span style="position:relative; top: 3px">Click to hide/show:&nbsp;&nbsp;</span>
+    <span style="position:relative; top: 3px">Toggle Continents:&nbsp;&nbsp;</span>
     <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect">
-        <input type="checkbox" name="continent" value="africa" class="mdl-checkbox__input" checked="">Africa
+        <input type="checkbox" value="africa" class="mdl-checkbox__input continent" checked="">Africa
         <span class="mdl-checkbox__label" id="africaColor" style="font-size: 20px; color: #1976D2;">&#9679;&nbsp;&nbsp;</span>
     </label>
     <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect">
-        <input type="checkbox" name="continent" value="northAmerica" class="mdl-checkbox__input" checked="">North America
-        <span class="mdl-checkbox__label" id="namericaColor" style="font-size: 20px; color: #388E3C;">&#9679;&nbsp;&nbsp;</span>
+        <input type="checkbox" value="northAmerica" class="mdl-checkbox__input continent" checked="">North America
+        <span class="mdl-checkbox__label" id="northAmericaColor" style="font-size: 20px; color: #388E3C;">&#9679;&nbsp;&nbsp;</span>
     </label>
     <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect">
-        <input type="checkbox" name="continent" value="southAmerica" class="mdl-checkbox__input" checked="">South America
-        <span class="mdl-checkbox__label" id="samericaColor" style="font-size: 20px; color: #E64A19;">&#9679;&nbsp;&nbsp;</span>
+        <input type="checkbox" value="southAmerica" class="mdl-checkbox__input continent" checked="">South America
+        <span class="mdl-checkbox__label" id="southAmericaColor" style="font-size: 20px; color: #E64A19;">&#9679;&nbsp;&nbsp;</span>
     </label>
     <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect">
-        <input type="checkbox" name="continent" value="asia" class="mdl-checkbox__input" checked="">Asia
+        <input type="checkbox" value="asia" class="mdl-checkbox__input continent" checked="">Asia
         <span class="mdl-checkbox__label" id="asiaColor" style="font-size: 20px; color: #D81B60;">&#9679;&nbsp;&nbsp;</span>
     </label>
     <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect">
-        <input type="checkbox" name="continent" value="europe" class="mdl-checkbox__input" checked="">Europe
+        <input type="checkbox" value="europe" class="mdl-checkbox__input continent" checked="">Europe
         <span class="mdl-checkbox__label" id="europeColor" style="font-size: 20px; color: #FBC02D;">&#9679;&nbsp;&nbsp;</span>
     </label>
     <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect">
-        <input type="checkbox" name="continent" value="oceania" class="mdl-checkbox__input" checked="">Oceania
+        <input type="checkbox" value="oceania" class="mdl-checkbox__input continent" checked="">Oceania
         <span class="mdl-checkbox__label" id="oceaniaColor" style="font-size: 20px; color: #455A64;">&#9679;&nbsp;&nbsp;</span>
     </label>
 </div>

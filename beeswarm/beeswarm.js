@@ -9,14 +9,29 @@ let xAxis = d3.axisBottom(xScale)
     .ticks(10, ".0s")
     .tickSizeOuter(0);
 
-var colors = d3.scaleOrdinal()
+let Scales = {
+    lin: "scaleLinear",
+    log: "scaleLog"
+};
+
+let Count = {
+    total: "total",
+    perCap: "perCapita"
+};
+
+let Legend = {
+    total: "Total Deaths",
+    perCap: "Per Capita Deaths"
+};
+
+let colors = d3.scaleOrdinal()
     .domain(["asia", "africa", "northAmerica", "europe", "southAmerica", "oceania"])
     .range(['#D81B60','#1976D2','#388E3C','#FBC02D','#E64A19','#455A64']);
 
-d3.select("#africaColor").style("color", colors("africa"));
-d3.select("#namericaColor").style("color", colors("northAmerica"));
-d3.select("#samericaColor").style("color", colors("southAmerica"));
 d3.select("#asiaColor").style("color", colors("asia"));
+d3.select("#africaColor").style("color", colors("africa"));
+d3.select("#northAmericaColor").style("color", colors("northAmerica"));
+d3.select("#southAmericaColor").style("color", colors("southAmerica"));
 d3.select("#europeColor").style("color", colors("europe"));
 d3.select("#oceaniaColor").style("color", colors("oceania"));
 
@@ -32,14 +47,14 @@ let svg = d3.select("#svganchor")
     .attr("height", height);
 
 let xLine = svg.append("line")
-    .attr("stroke", "gray")
+    .attr("stroke", "rgb(96,125,139)")
     .attr("stroke-dasharray", "1,2");
 
 let chartState = {};
 
-chartState.variable = "total";
-chartState.scale = "scaleLinear";
-chartState.legend = "Total Deaths";
+chartState.variable = Count.total;
+chartState.scale = Scales.lin;
+chartState.legend = Legend.total;
 
 d3.csv("http://localhost:8000/data/who_suicide_stats.csv").then(function (data) {
 
@@ -55,23 +70,27 @@ d3.csv("http://localhost:8000/data/who_suicide_stats.csv").then(function (data) 
         .call(xAxis);
 
     let legend = svg.append("text")
+        .attr("x", width / 2)
+        .attr("y", height - 2)
+        .attr("font-size", 11)
+        .attr("font-family", "Helvetica")
         .attr("class", "legend");
 
     redraw(chartState.variable);
 
-    d3.selectAll(".button1").on("click", function(){
+    d3.selectAll(".count").on("click", function() {
         let thisClicked = this.value;
         chartState.variable = thisClicked;
-        if (thisClicked === "total") {
-            chartState.legend = "Total Deaths";
+        if (thisClicked === Count.total) {
+            chartState.legend = Legend.total;
         }
-        if (thisClicked === "perCapita"){
-            chartState.legend = "Per Capita Deaths";
+        if (thisClicked === Count.perCap) {
+            chartState.legend = Legend.perCap;
         }
         redraw(chartState.variable);
     });
 
-    d3.selectAll(".button2").on("click", function(){
+    d3.selectAll(".scale").on("click", function() {
         chartState.scale = this.value;
         redraw(chartState.variable);
     });
@@ -80,12 +99,11 @@ d3.csv("http://localhost:8000/data/who_suicide_stats.csv").then(function (data) 
     d3.selectAll("input").on("change", filter);
 
     function redraw(variable){
-
-        if (chartState.scale === "scaleLinear") {
+        if (chartState.scale === Scales.lin) {
             xScale = d3.scaleLinear().range([ margin.left, width - margin.right ])
         }
 
-        if (chartState.scale === "scaleLog") {
+        if (chartState.scale === Scales.log) {
             xScale = d3.scaleLog().range([ margin.left, width - margin.right ]);
         }
 
@@ -93,9 +111,19 @@ d3.csv("http://localhost:8000/data/who_suicide_stats.csv").then(function (data) 
             return +d[variable];
         }));
 
-        let xAxis = d3.axisBottom(xScale)
-            .ticks(10, ".0s")
-            .tickSizeOuter(0);
+        let xAxis;
+
+        if (chartState.variable === Count.perCap) {
+            xAxis = d3.axisBottom(xScale)
+                .ticks(10, ",.1f")
+                .tickSizeOuter(0);
+        }
+        else {
+            xAxis = d3.axisBottom(xScale)
+                .ticks(10, ".0s")
+                .tickSizeOuter(0);
+        }
+
 
         d3.transition(svg).select(".x.axis")
             .transition()
@@ -107,7 +135,7 @@ d3.csv("http://localhost:8000/data/who_suicide_stats.csv").then(function (data) 
                 return xScale(+d[variable]);
             }).strength(2))
             .force("y", d3.forceY((height / 2) - margin.bottom / 2))
-            .force("collide", d3.forceCollide(10))
+            .force("collide", d3.forceCollide(9))
             .stop();
 
         for (let i = 0; i < dataSet.length; ++i) {
@@ -115,7 +143,7 @@ d3.csv("http://localhost:8000/data/who_suicide_stats.csv").then(function (data) 
         }
 
         let countriesCircles = svg.selectAll(".countries")
-            .data(dataSet, function(d) { return d.country});
+            .data(dataSet, function(d) { return d.country });
 
         countriesCircles.exit()
             .transition()
@@ -152,18 +180,18 @@ d3.csv("http://localhost:8000/data/who_suicide_stats.csv").then(function (data) 
                 .attr("x2",  d3.select(this).attr("cx"))
                 .attr("opacity", 1);
 
-        }).on("mouseout", function(d) {
+        }).on("mouseout", function(_) {
             tooltip.style("opacity", 0);
             xLine.attr("opacity", 0);
         });
 
-        //end of redraw
     }
 
-    function filter(){
+    function filter() {
 
         function getCheckedBoxes(checkboxName) {
-            let checkboxes = document.getElementsByName(checkboxName);
+
+            let checkboxes = d3.selectAll(checkboxName).nodes();
             let checkboxesChecked = [];
             for (let i = 0; i < checkboxes.length; i++) {
                 if (checkboxes[i].checked) {
@@ -173,19 +201,19 @@ d3.csv("http://localhost:8000/data/who_suicide_stats.csv").then(function (data) 
             return checkboxesChecked.length > 0 ? checkboxesChecked : null;
         }
 
-        let checkedBoxes = getCheckedBoxes("continent");
+        let checkedBoxes = getCheckedBoxes(".continent");
 
         let newData = [];
 
-        if (checkedBoxes == null){
+        if (checkedBoxes == null) {
             dataSet = newData;
             redraw();
             return;
         }
 
         for (let i = 0; i < checkedBoxes.length; i++){
-            let newArray = data.filter(function(d){
-                return d.continent == checkedBoxes[i];
+            let newArray = data.filter(function(d) {
+                return d.continent === checkedBoxes[i];
             });
             Array.prototype.push.apply(newData, newArray);
         }
