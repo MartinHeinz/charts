@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Charts</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.blue_grey-amber.min.css" />
+    <script defer src="https://code.getmdl.io/1.3.0/material.min.js"></script>
+    <style type="text/css">
+
+        body {
+            width:100%
+        }
+
+        .centered {
+            display: table;
+            margin: 20px auto;
+        }
+
+        div.tooltip {
+            position: absolute;
+            text-align: left;
+            color: white;
+            white-space: normal;
+            padding: 6px;
+            font-size: 14px;
+            background: rgb(96,125,139);
+            border: 1px solid rgb(96,125,139);
+            border-radius: 2px;
+            pointer-events: none;
+            cursor: none;
+        }
+
+
+    </style>
+</head>
+
+<body>
+<div class="centered" style="padding-top: 25px">
+    <div id="drop"></div>
+</div>
+<div id="svganchor" class="graph centered">
+</div>
+</body>
+
+<script src = "https://d3js.org/d3.v5.min.js"></script>
+<script src = "parallel-coordinates.js"></script>
+
+</html>
