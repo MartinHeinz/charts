@@ -63,7 +63,7 @@ chartState.scale = Scales.lin;
 chartState.legend = Legend.total;
 
 // Load and process data
-d3.csv("http://localhost:8000/data/who_suicide_stats.csv").then(function (data) {
+d3.csv("https://martinheinz.github.io/charts/data/who_suicide_stats.csv").then(function (data) {
 
     let dataSet = data;
 

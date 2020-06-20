@@ -54,7 +54,7 @@ let coordTitle = svg.selectAll(".coordTitle")
     .enter()
     .append("text");
 
-d3.csv("http://localhost:8000/data/ICT_HH2_13062020143325255_H1K_all.csv").then(function (data) {
+d3.csv("https://martinheinz.github.io/charts/data/ICT_HH2_13062020143325255_H1K_all.csv").then(function (data) {
 
     data.forEach(d => {
         d.percentage = +d.percentage;
