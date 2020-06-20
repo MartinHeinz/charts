@@ -110,7 +110,7 @@ function parse_oedc_data(file, y, out){
     array_to_csv(result, `../data/${out}`);
 }
 
-
+parse_oedc_data("../data/ICT_HH2_13062020143325255_H1K.csv", "2007", "ICT_HH2_13062020143325255_H1K_2007.csv");
 parse_oedc_data("../data/ICT_HH2_13062020143325255_H1K.csv", "2012", "ICT_HH2_13062020143325255_H1K_2012.csv");
 parse_oedc_data("../data/ICT_HH2_13062020143325255_H1K.csv", "2019", "ICT_HH2_13062020143325255_H1K_2019.csv");
 parse_oedc_data("../data/BROADBAND_DB_11062020214338289_BB-P100-FIB.csv", "2018", "BROADBAND_DB_11062020214338289_BB-P100-FIB_2018.csv");
