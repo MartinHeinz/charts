@@ -8,12 +8,18 @@
     <style type="text/css">
 
         body {
-            width:100%
+            width:100%;
         }
 
         .centered {
             display: table;
-            margin: 20px auto;
+            margin: 10px auto;
+        }
+
+        .centered-drop {
+            display: table;
+            margin: 10px auto;
+
         }
 
         div.tooltip {
@@ -29,16 +35,37 @@
             pointer-events: none;
             cursor: none;
         }
+        .button-group {
+            display:inline;
+            padding-right: 30px;
+        }
 
+        button {
+            margin:0 auto;
+            display:block;
+        }
 
     </style>
 </head>
 
 <body>
 <div class="centered" style="padding-top: 25px">
-    <div id="drop"></div>
+
 </div>
 <div id="svganchor" class="graph centered">
+</div>
+<div class="centered-drop">
+    <div class="button-group">
+        <span style="position:relative; font-size: 16px">Domain: </span>
+        <button type="button" class="button mdl-button mdl-js-button mdl-button--raised mdl-button--colored" value="full">Full</button>
+        <button type="button" class="button mdl-button mdl-js-button mdl-button--raised mdl-button--colored" value="relative">Relative</button>
+    </div>
+    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+        <select id="drop" class="mdl-textfield__input">
+
+        </select>
+        <label class="mdl-textfield__label" for="drop">Country</label>
+    </div>
 </div>
 </body>
 
