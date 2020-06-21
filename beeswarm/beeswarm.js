@@ -56,6 +56,19 @@ let xLine = svg.append("line")
     .attr("stroke", "rgb(96,125,139)")
     .attr("stroke-dasharray", "1,2");
 
+// Insert text into legend (and add styles)
+let legend = svg.append("text")
+    .attr("x", width / 2)
+    .attr("y", height - 2)
+    .attr("font-size", 11)
+    .attr("font-family", "Helvetica")
+    .attr("class", "legend");
+
+svg.append("g")
+    .attr("class", "x axis")
+    .attr("transform", "translate(0," + (height - margin.bottom) + ")")
+    .call(xAxis);
+
 let chartState = {};
 
 chartState.variable = Count.total;
@@ -71,19 +84,6 @@ d3.csv("https://martinheinz.github.io/charts/data/who_suicide_stats.csv").then(f
     xScale.domain(d3.extent(data, function (d) {
         return +d.total;
     }));
-
-    svg.append("g")
-        .attr("class", "x axis")
-        .attr("transform", "translate(0," + (height - margin.bottom) + ")")
-        .call(xAxis);
-
-    // Insert text into legend (and add styles)
-    let legend = svg.append("text")
-        .attr("x", width / 2)
-        .attr("y", height - 2)
-        .attr("font-size", 11)
-        .attr("font-family", "Helvetica")
-        .attr("class", "legend");
 
     redraw(chartState.variable);
 
@@ -105,7 +105,6 @@ d3.csv("https://martinheinz.github.io/charts/data/who_suicide_stats.csv").then(f
         chartState.scale = this.value;
         redraw(chartState.variable);
     });
-
 
     // Trigger filter function whenever checkbox is ticked/unticked
     d3.selectAll("input").on("change", filter);
