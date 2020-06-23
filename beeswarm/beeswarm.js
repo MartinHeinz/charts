@@ -2,13 +2,6 @@ let height = 400;
 let width = 1000;
 let margin = ({top: 0, right: 40, bottom: 34, left: 40});
 
-let xScale = d3.scaleLinear()
-    .range([margin.left, width - margin.right]);
-
-let xAxis = d3.axisBottom(xScale)
-    .ticks(10, ".0s")
-    .tickSizeOuter(0);
-
 // Data structure describing chart scales
 let Scales = {
     lin: "scaleLinear",
@@ -27,6 +20,13 @@ let Legend = {
     perCap: "Per Capita Deaths"
 };
 
+let chartState = {};
+
+chartState.variable = Count.total;
+chartState.scale = Scales.lin;
+chartState.legend = Legend.total;
+
+
 // Colors used for circles depending on continent
 let colors = d3.scaleOrdinal()
     .domain(["asia", "africa", "northAmerica", "europe", "southAmerica", "oceania"])
@@ -39,17 +39,22 @@ d3.select("#southAmericaColor").style("color", colors("southAmerica"));
 d3.select("#europeColor").style("color", colors("europe"));
 d3.select("#oceaniaColor").style("color", colors("oceania"));
 
-let formatNumber = d3.format(",");
-
-// Create tooltip div and make it invisible
-let tooltip = d3.select("#svganchor").append("div")
-    .attr("class", "tooltip")
-    .style("opacity", 0);
-
 let svg = d3.select("#svganchor")
     .append("svg")
     .attr("width", width)
     .attr("height", height);
+
+let xScale = d3.scaleLinear()
+    .range([margin.left, width - margin.right]);
+
+let xAxis = d3.axisBottom(xScale)
+    .ticks(10, ".1s")
+    .tickSizeOuter(0);
+
+svg.append("g")
+    .attr("class", "x axis")
+    .attr("transform", "translate(0," + (height - margin.bottom) + ")")
+    .call(xAxis);
 
 // Create line for X axis
 let xLine = svg.append("line")
@@ -64,16 +69,12 @@ let legend = svg.append("text")
     .attr("font-family", "Helvetica")
     .attr("class", "legend");
 
-svg.append("g")
-    .attr("class", "x axis")
-    .attr("transform", "translate(0," + (height - margin.bottom) + ")")
-    .call(xAxis);
+// Create tooltip div and make it invisible
+let tooltip = d3.select("#svganchor").append("div")
+    .attr("class", "tooltip")
+    .style("opacity", 0);
 
-let chartState = {};
-
-chartState.variable = Count.total;
-chartState.scale = Scales.lin;
-chartState.legend = Legend.total;
+let formatNumber = d3.format(",");
 
 // Load and process data
 d3.csv("https://martinheinz.github.io/charts/data/who_suicide_stats.csv").then(function (data) {
@@ -133,10 +134,9 @@ d3.csv("https://martinheinz.github.io/charts/data/who_suicide_stats.csv").then(f
         }
         else {
             xAxis = d3.axisBottom(xScale)
-                .ticks(10, ".0s")
+                .ticks(10, ".1s")
                 .tickSizeOuter(0);
         }
-
 
         d3.transition(svg).select(".x.axis")
             .transition()
