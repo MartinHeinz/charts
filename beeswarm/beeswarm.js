@@ -47,34 +47,19 @@ let svg = d3.select("#svganchor")
 let xScale = d3.scaleLinear()
     .range([margin.left, width - margin.right]);
 
-let xAxis = d3.axisBottom(xScale)
-    .ticks(10, ".1s")
-    .tickSizeOuter(0);
-
 svg.append("g")
     .attr("class", "x axis")
-    .attr("transform", "translate(0," + (height - margin.bottom) + ")")
-    .call(xAxis);
+    .attr("transform", "translate(0," + (height - margin.bottom) + ")");
 
-// Create line for X axis
+// Create line that connects circle and X axis
 let xLine = svg.append("line")
     .attr("stroke", "rgb(96,125,139)")
     .attr("stroke-dasharray", "1,2");
-
-// Insert text into legend (and add styles)
-let legend = svg.append("text")
-    .attr("x", width / 2)
-    .attr("y", height - 2)
-    .attr("font-size", 11)
-    .attr("font-family", "Helvetica")
-    .attr("class", "legend");
 
 // Create tooltip div and make it invisible
 let tooltip = d3.select("#svganchor").append("div")
     .attr("class", "tooltip")
     .style("opacity", 0);
-
-let formatNumber = d3.format(",");
 
 // Load and process data
 d3.csv("https://martinheinz.github.io/charts/data/who_suicide_stats.csv").then(function (data) {
@@ -181,13 +166,11 @@ d3.csv("https://martinheinz.github.io/charts/data/who_suicide_stats.csv").then(f
             .attr("cx", function(d) { return d.x; })
             .attr("cy", function(d) { return d.y; });
 
-        legend.text(chartState.legend);
-
         // Show tooltip when hovering over circle (data for respective country)
         d3.selectAll(".countries").on("mousemove", function(d) {
             tooltip.html(`Country: <strong>${d.country}</strong><br>
                           ${chartState.legend.slice(0, chartState.legend.indexOf(","))}: 
-                          <strong>${formatNumber(d[variable])}</strong>
+                          <strong>${d3.format(",")(d[variable])}</strong>
                           ${chartState.legend.slice(chartState.legend.lastIndexOf(" "))}`)
                 .style('top', d3.event.pageY - 12 + 'px')
                 .style('left', d3.event.pageX + 25 + 'px')
