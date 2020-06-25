@@ -22,7 +22,7 @@ let Legend = {
 
 let chartState = {};
 
-chartState.variable = Count.total;
+chartState.measure = Count.total;
 chartState.scale = Scales.lin;
 chartState.legend = Legend.total;
 
@@ -71,31 +71,31 @@ d3.csv("https://martinheinz.github.io/charts/data/who_suicide_stats.csv").then(f
         return +d.total;
     }));
 
-    redraw(chartState.variable);
+    redraw();
 
     // Listen to click on "total" and "per capita" buttons and trigger redraw when they are clicked
-    d3.selectAll(".count").on("click", function() {
+    d3.selectAll(".measure").on("click", function() {
         let thisClicked = this.value;
-        chartState.variable = thisClicked;
+        chartState.measure = thisClicked;
         if (thisClicked === Count.total) {
             chartState.legend = Legend.total;
         }
         if (thisClicked === Count.perCap) {
             chartState.legend = Legend.perCap;
         }
-        redraw(chartState.variable);
+        redraw();
     });
 
     // Listen to click on "scale" buttons and trigger redraw when they are clicked
     d3.selectAll(".scale").on("click", function() {
         chartState.scale = this.value;
-        redraw(chartState.variable);
+        redraw(chartState.measure);
     });
 
     // Trigger filter function whenever checkbox is ticked/unticked
     d3.selectAll("input").on("change", filter);
 
-    function redraw(variable) {
+    function redraw() {
 
         // Set scale type based on button clicked
         if (chartState.scale === Scales.lin) {
@@ -107,14 +107,14 @@ d3.csv("https://martinheinz.github.io/charts/data/who_suicide_stats.csv").then(f
         }
 
         xScale.domain(d3.extent(dataSet, function(d) {
-            return +d[variable];
+            return +d[chartState.measure];
         }));
 
         let xAxis;
         // Set X axis based on new scale. If chart is set to "per capita" use numbers with one decimal point
-        if (chartState.variable === Count.perCap) {
+        if (chartState.measure === Count.perCap) {
             xAxis = d3.axisBottom(xScale)
-                .ticks(10, ",.1f")
+                .ticks(10, ".1f")
                 .tickSizeOuter(0);
         }
         else {
@@ -131,7 +131,7 @@ d3.csv("https://martinheinz.github.io/charts/data/who_suicide_stats.csv").then(f
         // Create simulation for resolving collisions
         let simulation = d3.forceSimulation(dataSet)
             .force("x", d3.forceX(function(d) {
-                return xScale(+d[variable]);
+                return xScale(+d[chartState.measure]);
             }).strength(2))
             .force("y", d3.forceY((height / 2) - margin.bottom / 2))
             .force("collide", d3.forceCollide(9))
@@ -170,7 +170,7 @@ d3.csv("https://martinheinz.github.io/charts/data/who_suicide_stats.csv").then(f
         d3.selectAll(".countries").on("mousemove", function(d) {
             tooltip.html(`Country: <strong>${d.country}</strong><br>
                           ${chartState.legend.slice(0, chartState.legend.indexOf(","))}: 
-                          <strong>${d3.format(",")(d[variable])}</strong>
+                          <strong>${d3.format(",")(d[chartState.measure])}</strong>
                           ${chartState.legend.slice(chartState.legend.lastIndexOf(" "))}`)
                 .style('top', d3.event.pageY - 12 + 'px')
                 .style('left', d3.event.pageX + 25 + 'px')
@@ -222,7 +222,7 @@ d3.csv("https://martinheinz.github.io/charts/data/who_suicide_stats.csv").then(f
         }
 
         dataSet = newData;
-        redraw(chartState.variable);
+        redraw();
     }
 
 }).catch(function (error) {
