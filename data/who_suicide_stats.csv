@@ -1,91 +1,90 @@
-country,total,population,perCapita,continent
-Argentina,2987,38859125,0.13,southAmerica
-Armenia,67,2810664,0.42,europe
-Aruba,2,97110,0.486,northAmerica
-Australia,2608,21600180,0.083,oceania
-Austria,1291,8079615,0.063,europe
-Bahamas,5,348959,0.698,northAmerica
-Bahrain,5,1214492,2.429,asia
-Belarus,1902,8910240,0.047,europe
-Belgium,1895,10526149,0.056,europe
-Belize,17,305888,0.18,northAmerica
-Brazil,10513,187458852,0.178,southAmerica
-Brunei Darussalam,4,373361,0.933,asia
-Bulgaria,721,6920644,0.096,europe
-Canada,4054,33314836,0.082,northAmerica
-Chile,1738,16242244,0.093,southAmerica
-Colombia,2068,43546298,0.211,southAmerica
-Costa Rica,311,4347229,0.14,northAmerica
-Croatia,692,4044457,0.058,europe
-Cuba,1499,10792690,0.072,northAmerica
-Cyprus,45,813016,0.181,europe
-Czech Republic,1577,9936780,0.063,europe
-Denmark,610,5299698,0.087,europe
-Ecuador,676,14054613,0.208,southAmerica
-Egypt,149,78431389,5.264,africa
-El Salvador,484,5657250,0.117,northAmerica
-Estonia,218,1243096,0.057,europe
-Finland,887,5135433,0.058,europe
-France,9600,59910069,0.062,europe
-French Guiana,19,222674,0.117,southAmerica
-Georgia,157,4192600,0.267,europe
-Germany,10091,77270988,0.077,europe
-Greece,533,10431289,0.196,europe
-Guadeloupe,39,424123,0.109,northAmerica
-Guatemala,455,13641878,0.3,northAmerica
-Guyana,210,683867,0.033,southAmerica
-Hong Kong SAR,997,6919200,0.069,asia
-Hungary,2092,9433840,0.045,europe
-Iceland,49,300456,0.061,europe
-Iran (Islamic Rep of),2442,70575720,0.289,asia
-Ireland,487,4227378,0.087,europe
-Israel,372,7226008,0.194,asia
-Italy,4290,57503331,0.134,europe
-Japan,25991,120514000,0.046,asia
-Kazakhstan,3512,15215382,0.043,europe
-Kuwait,41,3574090,0.872,asia
-Kyrgyzstan,446,5012200,0.112,asia
-Latvia,383,1912464,0.05,europe
-Lithuania,1085,2806627,0.026,europe
-Luxembourg,40,512689,0.128,europe
-Malta,22,402728,0.183,europe
-Martinique,27,367843,0.136,northAmerica
-Mauritius,98,1147390,0.117,southAmerica
-Mayotte,3,191591,0.639,africa
-Mexico,5711,111036708,0.194,northAmerica
-Netherlands,1856,15899508,0.086,europe
-New Zealand,513,4129770,0.081,oceania
-Nicaragua,351,5326935,0.152,northAmerica
-Norway,554,4767605,0.086,europe
-Panama,130,3457387,0.266,northAmerica
-Paraguay,323,5786207,0.179,southAmerica
-Poland,6218,36023694,0.058,europe
-Portugal,1052,9985074,0.095,europe
-Puerto Rico,241,3471665,0.144,northAmerica
-Qatar,37,2135349,0.577,asia
-Republic of Korea,14426,48248224,0.033,asia
-Republic of Moldova,576,3363814,0.058,europe
-Reunion,93,781254,0.084,africa
-Rodrigues,2,37773,0.189,africa
-Romania,2407,19003345,0.079,europe
-Russian Federation,28690,134713962,0.047,europe
-Saint Lucia,14,164790,0.118,northAmerica
-Serbia,1197,6832840,0.057,europe
-Seychelles,9,82541,0.092,africa
-Singapore,357,3661456,0.103,asia
-Slovakia,616,5122209,0.083,europe
-Slovenia,446,1948276,0.044,europe
-South Africa,587,48192699,0.821,africa
-Spain,3873,44227625,0.114,europe
-Suriname,131,492359,0.038,southAmerica
-Sweden,1230,9024081,0.073,europe
-Switzerland,1071,7681318,0.072,europe
-TFYR Macedonia,170,1947542,0.115,europe
-Thailand,3961,60766487,0.153,asia
-Turkey,1810,69880352,0.386,europe
-Turkmenistan,101,4748055,0.47,asia
-United Kingdom,4824,60091793,0.125,europe
-United States of America,41143,295322862,0.072,northAmerica
-Uruguay,546,3164670,0.058,southAmerica
-Uzbekistan,1950,26838924,0.138,asia
-Venezuela (Bolivarian Republic of),618,27345912,0.442,southAmerica
+Argentina,2987,38859125,7.687
+Armenia,67,2810664,2.384
+Aruba,2,97110,2.06
+Australia,2608,21600180,12.074
+Austria,1291,8079615,15.978
+Bahamas,5,348959,1.433
+Bahrain,5,1214492,0.412
+Belarus,1902,8910240,21.346
+Belgium,1895,10526149,18.003
+Belize,17,305888,5.558
+Brazil,10513,187458852,5.608
+Brunei Darussalam,4,373361,1.071
+Bulgaria,721,6920644,10.418
+Canada,4054,33314836,12.169
+Chile,1738,16242244,10.7
+Colombia,2068,43546298,4.749
+Costa Rica,311,4347229,7.154
+Croatia,692,4044457,17.11
+Cuba,1499,10792690,13.889
+Cyprus,45,813016,5.535
+Czech Republic,1577,9936780,15.87
+Denmark,610,5299698,11.51
+Ecuador,676,14054613,4.81
+Egypt,149,78431389,0.19
+El Salvador,484,5657250,8.555
+Estonia,218,1243096,17.537
+Finland,887,5135433,17.272
+France,9600,59910069,16.024
+French Guiana,19,222674,8.533
+Georgia,157,4192600,3.745
+Germany,10091,77270988,13.059
+Greece,533,10431289,5.11
+Guadeloupe,39,424123,9.195
+Guatemala,455,13641878,3.335
+Guyana,210,683867,30.708
+Hong Kong SAR,997,6919200,14.409
+Hungary,2092,9433840,22.175
+Iceland,49,300456,16.309
+Iran (Islamic Rep of),2442,70575720,3.46
+Ireland,487,4227378,11.52
+Israel,372,7226008,5.148
+Italy,4290,57503331,7.46
+Japan,25991,120514000,21.567
+Kazakhstan,3512,15215382,23.082
+Kuwait,41,3574090,1.147
+Kyrgyzstan,446,5012200,8.898
+Latvia,383,1912464,20.027
+Lithuania,1085,2806627,38.659
+Luxembourg,40,512689,7.802
+Malta,22,402728,5.463
+Martinique,27,367843,7.34
+Mauritius,98,1147390,8.541
+Mayotte,3,191591,1.566
+Mexico,5711,111036708,5.143
+Netherlands,1856,15899508,11.673
+New Zealand,513,4129770,12.422
+Nicaragua,351,5326935,6.589
+Norway,554,4767605,11.62
+Panama,130,3457387,3.76
+Paraguay,323,5786207,5.582
+Poland,6218,36023694,17.261
+Portugal,1052,9985074,10.536
+Puerto Rico,241,3471665,6.942
+Qatar,37,2135349,1.733
+Republic of Korea,14426,48248224,29.9
+Republic of Moldova,576,3363814,17.123
+Reunion,93,781254,11.904
+Rodrigues,2,37773,5.295
+Romania,2407,19003345,12.666
+Russian Federation,28690,134713962,21.297
+Saint Lucia,14,164790,8.496
+Serbia,1197,6832840,17.518
+Seychelles,9,82541,10.904
+Singapore,357,3661456,9.75
+Slovakia,616,5122209,12.026
+Slovenia,446,1948276,22.892
+South Africa,587,48192699,1.218
+Spain,3873,44227625,8.757
+Suriname,131,492359,26.607
+Sweden,1230,9024081,13.63
+Switzerland,1071,7681318,13.943
+TFYR Macedonia,170,1947542,8.729
+Thailand,3961,60766487,6.518
+Turkey,1810,69880352,2.59
+Turkmenistan,101,4748055,2.127
+United Kingdom,4824,60091793,8.028
+United States of America,41143,295322862,13.932
+Uruguay,546,3164670,17.253
+Uzbekistan,1950,26838924,7.266
+Venezuela (Bolivarian Republic of),618,27345912,2.26
