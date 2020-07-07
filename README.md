@@ -55,6 +55,23 @@ Code used for preprocessing can be found in directory [here](preprocessing).
     
 - Epicurious - Recipes with Rating and Nutrition
     - <https://www.kaggle.com/hugodarwood/epirecipes>
+    
+- Google Trends - Olympic Sports by Country
+    - `20160819_OlympicSportsByCountries.csv`
+    - <https://www.kaggle.com/timoboz/google-trends-data>
+    
+- Zomato Restaurant Data
+    - <https://www.kaggle.com/shrutimehta/zomato-restaurants-data>
+    
+- USA DoD Sites
+    - <https://catalog.data.gov/dataset/dod-sites-boundary>
+    - Can we visualized/previewed with <http://geojson.tools/>
+    
+- International Tourism, number of Arrivals
+    - <https://data.worldbank.org/indicator/ST.INT.ARVL>
+    
+- Arrivals of non resident tourists/visitors, departures and tourism expenditure in the country and in other countries
+    - <http://data.un.org/DocumentData.aspx?q=tourism&id=409>
 
 ### Sources
 
