@@ -128,14 +128,16 @@ d3.csv("https://martinheinz.github.io/charts/data/who_suicide_stats.csv").then(f
             .duration(1000)
             .call(xAxis);
 
-        // Create simulation for resolving collisions
+        // Create simulation with specified dataset
         let simulation = d3.forceSimulation(dataSet)
+            // Apply positioning force to push nodes towards desired position along X axis
             .force("x", d3.forceX(function(d) {
-                return xScale(+d[chartState.measure]);
-            }).strength(2))
-            .force("y", d3.forceY((height / 2) - margin.bottom / 2))
-            .force("collide", d3.forceCollide(9))
-            .stop();
+                // Mapping of values from total/perCapita column of dataset to range of SVG chart (<margin.left, margin.right>)
+                return xScale(+d[chartState.measure]);  // This is the desired position
+            }).strength(2))  // Increase velocity
+            .force("y", d3.forceY((height / 2) - margin.bottom / 2))  // // Apply positioning force to push nodes towards center along Y axis
+            .force("collide", d3.forceCollide(9)) // Apply collision force with radius of 9 - keeps nodes centers 9 pixels apart
+            .stop();  // Stop simulation from starting automatically
 
         // Manually run simulation
         for (let i = 0; i < dataSet.length; ++i) {
