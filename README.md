@@ -6,11 +6,13 @@ Live Demo: <https://martinheinz.github.io/charts/>
 
 ### Beeswarm Chart
 
-Chart Demo: <https://martinheinz.github.io/charts/beeswarm/>
+- Chart Demo: <https://martinheinz.github.io/charts/beeswarm/>
 
-Original data taken from WHO Suicide Statistics
-- Basic historical (1979-2016) data by country, year and demographic groups
-- <https://www.kaggle.com/szamil/who-suicide-statistics>
+- Article: [Better Data Visualization Using Beeswarm Chart](https://towardsdatascience.com/better-data-visualization-using-beeswarm-chart-bb46a229c56b)
+
+- Original data taken from WHO Suicide Statistics
+    - Basic historical (1979-2016) data by country, year and demographic groups
+    - <https://www.kaggle.com/szamil/who-suicide-statistics>
 
 Parsed and cleaned dataset can be found [here](data/who_suicide_stats.csv).
 
