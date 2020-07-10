@@ -1,5 +1,5 @@
 # https://en.wikipedia.org/wiki/List_of_epidemics
-# Data for stratigraphic range
+# Data for horizontal bar chart
 
 import locale
 from urllib.request import urlopen
