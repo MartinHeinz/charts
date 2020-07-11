@@ -5,6 +5,8 @@ let margin = ({top: 26, right: 20, bottom: 86, left: 100});
 let xScale = d3.scaleLinear()
     .range([margin.left, width - margin.right]);
 
+let xMin = 0;
+
 let yScale = d3.scaleBand()
     .range([margin.top, height - margin.bottom])
     .paddingInner(0.4)
@@ -46,20 +48,9 @@ let xTitle = svg.append("text")
     .attr("text-anchor", "middle")
     .attr("y", (height - margin.bottom) + 34)
     .attr("x", (margin.left + (width - margin.right))/2)
-    .text("Time (Ma)");
-
-xTitle.on("mousemove", function() {
-    tt.html("This axis shows time,<br>in millions of years ago")
-        .style('top', d3.event.pageY - 12 + 'px')
-        .style('left', d3.event.pageX + 15 + 'px')
-        .style("opacity", 1);
-}).on("mouseout", function() {
-    tt.style("opacity", 0)
-});
+    .text("Time (Years)");
 
 d3.csv("../data/epidemics.csv").then(function(data) {
-
-
 
     data.forEach(function(d) {
         let span = d.span;
@@ -95,26 +86,26 @@ d3.csv("../data/epidemics.csv").then(function(data) {
       d.toll = +d.toll;
     });
 
-    console.log(data);
+    let dataSet = data;
 
     xScale.domain([
-        d3.min(data, function(d) { return d.start }),
-        d3.max(data, function(d) { return d.end })
+        d3.min(dataSet, function(d) { return d.start }),
+        d3.max(dataSet, function(d) { return d.end })
         ]);
 
-    yScale.domain(data.map(function(d) { return d.title; })); // TODO too many lines
+    yScale.domain(dataSet.map(function(d) { return d.title; })); // TODO too many lines
 
     let colors = d3.scaleLinear()
-        .domain([d3.max(data, function(d) {
+        .domain([d3.max(dataSet, function(d) {
             return d.start - d.end;
-        }), d3.min(data, function(d) {
+        }), d3.min(dataSet, function(d) {
             return d.start - d.end;
         })])
         .range(["#2c7bb6", "#d7191c"])
         .interpolate(d3.interpolateHcl);
 
     let bars = svg.selectAll(".myBars")
-        .data(data)
+        .data(dataSet)
         .enter()
         .append("rect");
 
@@ -146,7 +137,7 @@ d3.csv("../data/epidemics.csv").then(function(data) {
     gX.lower();
 
     d3.selectAll(".y.axis text").on("mousemove", function(d) {
-        let filteredData = data.filter(function(e) { return e.title === d})[0];
+        let filteredData = dataSet.filter(function(e) { return e.title === d})[0];
         tt.html(`Name: <strong>${filteredData.title}</strong><br>
                  Location: <strong>${filteredData.location}</strong>
                 `)
@@ -240,22 +231,22 @@ d3.csv("../data/epidemics.csv").then(function(data) {
         let sortedData;
 
         if(sort === "sortTotalDeathToll") {
-            sortedData = data.sort(function(a, b) {
+            sortedData = dataSet.sort(function(a, b) {
                 return d3.descending(a.toll , b.toll);
             });
         }
         else if(sort === "sortStartYear") {
-            sortedData = data.sort(function(a, b) {
+            sortedData = dataSet.sort(function(a, b) {
                 return d3.ascending(a.start , b.start);
             });
         }
         else if(sort === "sortTotalSpan") {
-            sortedData = data.sort(function(a, b) {
+            sortedData = dataSet.sort(function(a, b) {
                 return d3.descending(a.span , b.span);
             });
         }
 
-        yScale.domain(data.map(function(d) { return d.title; }));
+        yScale.domain(dataSet.map(function(d) { return d.title; }));
 
         bars.transition()
             .duration(1000)
@@ -270,32 +261,88 @@ d3.csv("../data/epidemics.csv").then(function(data) {
 
     function drawSince(since) {
 
+        dataSet = data;
+
         if(since === "all") {
             xScale.domain([
-                d3.min(data, function(d) { return d.start; }),
-                d3.max(data, function(d) { return d.end; })
+                d3.min(dataSet, function(d) { return d.start; }),
+                d3.max(dataSet, function(d) { return d.end; })
             ]);
         }
-        else if(since === "ad") {
+        else if(since === "basedOnInput") {
+            let xMin = +inputFrom.property("value");
+            dataSet = [];
+            for (const d of data) {
+                if (d.start < xMin && d.end > xMin) {
+                    d.start = xMin;
+                }
+                if (d.end >= xMin) {
+                    dataSet.push(d)
+                }
+            }
             xScale.domain([
-                +inputFrom.property("value"),
+                xMin,
                 +inputTo.property("value"),
                 ]);
         }
         else if(since === "modern") {
+            let xMin = 1600;
+            dataSet = [];
+            for (const d of data) {
+                if (d.start < xMin && d.end > xMin) {
+                    d.start = xMin;
+                }
+                if (d.end >= xMin) {
+                    dataSet.push(d)
+                }
+            }
             xScale.domain([
-                1600,
-                d3.max(data, function(d) { return d.end;})
+                xMin,
+                d3.max(dataSet, function(d) { return d.end;})
             ]);
         }
 
+        // console.log(dataSet);
+
+        bars.data(dataSet);
+        bars.exit().remove();
+
+
+        yScale.domain(dataSet.map(function(d) { return d.title; }));
+
+        console.log(yScale.bandwidth());
+
         bars.transition()
             .duration(1000)
-            .attr("x", function(d) { return xScale(d.start);})
-            .attr("width", function(d) { return xScale(d.end) - xScale(d.start);});
+            .attr("x", function(d) { return xScale(d.start); })
+            .attr("y", function(d) { return yScale(d.title);})
+            .attr("width", function(d) { return xScale(d.end) - xScale(d.start);})
+            .attr("height", yScale.bandwidth())
+            .attr("rx", 4)
+            .attr("ry", 4)
+            .attr("fill", function(d) {
+                return colors(d.start - d.end);
+            });
 
         svg.transition(svg).select(".x.axis").transition().duration(1000)
             .call(xAxis);
+
+        svg.transition(svg).select(".y.axis")
+            .transition()
+            .duration(1000)
+            .call(yAxis);
+
+        d3.selectAll(".y.axis text").on("mousemove", function(d) {
+            let filteredData = dataSet.filter(function(e) { return e.title === d})[0];
+            tt.html(`Name: <strong>${filteredData.title}</strong><br>
+                 Location: <strong>${filteredData.location}</strong>
+                `)
+                .style('top', d3.event.pageY - 12 + 'px')
+                .style('left', d3.event.pageX + 15 + 'px')
+                .style("opacity", 1);
+        }).on("mouseout", function() {
+            tt.style("opacity", 0)
+        });
 
     }
 
