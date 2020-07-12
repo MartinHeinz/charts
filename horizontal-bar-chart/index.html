@@ -21,19 +21,6 @@
             margin: 0 auto;
         }
 
-        #checkboxes > * {
-            font-size: 14px;
-            display: inline;
-            padding-top: 3px;
-        }
-
-        #checkboxes {
-            font-size: 14px;
-            display: inline;
-            padding-right: 30px;
-        }
-
-
         .since-group {
             display:inline;
         }
@@ -104,26 +91,29 @@
             pointer-events: none;
         }
 
+        div .mdl-textfield {
+            top: 5px;
+            width: 100px;
+            padding-right: 5px;
+        }
+
 
     </style>
 </head>
 
 <body>
 <div class="centered" style="padding-top: 25px">
-    <div id="checkboxes">
-        <span style="position:relative">Show Ongoing Only:&nbsp;&nbsp;</span>
-        <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect">
-            <input type="checkbox" value="ongoing" class="mdl-checkbox__input ongoing">
-        </label>
-    </div>
     <div class="since-group" data-toggle="buttons-radio">
-        <label for="from">Since</label>
-        <input type="text" id="from" name="from" value="2000">
-        <label for="to">To:</label>
-        <input type="text" id="to" name="Until" value="2020">
+        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+            <input class="mdl-textfield__input" type="text" id="from"  value="2000">
+            <label class="mdl-textfield__label" for="from">Since</label>
+        </div>
+        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+            <input class="mdl-textfield__input" type="text" id="to"  value="2020">
+            <label class="mdl-textfield__label" for="to">Until</label>
+        </div>
         <button type="button" class="since mdl-button mdl-js-button mdl-button--raised mdl-button--colored" value="basedOnInput">Show</button>
         <button type="button" class="since mdl-button mdl-js-button mdl-button--raised mdl-button--colored" value="all">Show All</button>
-        <button type="button" class="since mdl-button mdl-js-button mdl-button--raised mdl-button--colored" value="modern">Show Modern Day</button>
     </div>
     <div class="sort-group" data-toggle="buttons-radio">
         <button type="button" class="sort mdl-button mdl-js-button mdl-button--raised mdl-button--colored" value="sortTotalSpan">Sort by Total Span</button>

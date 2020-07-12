@@ -295,13 +295,13 @@ d3.csv("../data/epidemics.csv").then(function(data) {
             ]);
         }
         else if(since === "basedOnInput") {
-            let xMin = +inputFrom.property("value");
+            xMin = +inputFrom.property("value");
             dataSet = [];
             for (const d of data) {
                 if (d.start < xMin && d.end > xMin) {
                     d.start = xMin;
                 }
-                if (d.end >= xMin) {
+                if (d.end > xMin) {
                     dataSet.push(d)
                 }
             }
@@ -309,22 +309,6 @@ d3.csv("../data/epidemics.csv").then(function(data) {
                 xMin,
                 +inputTo.property("value"),
                 ]);
-        }
-        else if(since === "modern") {
-            let xMin = 1600;
-            dataSet = [];
-            for (const d of data) {
-                if (d.start < xMin && d.end > xMin) {
-                    d.start = xMin;
-                }
-                if (d.end >= xMin) {
-                    dataSet.push(d)
-                }
-            }
-            xScale.domain([
-                xMin,
-                d3.max(dataSet, function(d) { return d.end;})
-            ]);
         }
 
         bars.data(dataSet);
