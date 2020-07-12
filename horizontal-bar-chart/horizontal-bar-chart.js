@@ -173,8 +173,8 @@ function range(start, end, increment) {
     return array;
 }
 
-// d3.csv("https://martinheinz.github.io/charts/data/epidemics.csv").then(function(data) {
-d3.csv("../data/epidemics.csv").then(function(data) {
+d3.csv("https://martinheinz.github.io/charts/data/epidemics.csv").then(function(data) {
+// d3.csv("../data/epidemics.csv").then(function(data) {
 
     data.forEach(function(d) {
         let span = d.span;
@@ -212,13 +212,6 @@ d3.csv("../data/epidemics.csv").then(function(data) {
 
     let dataSet = data;
 
-    xScale.domain([
-        d3.min(dataSet, function(d) { return d.start }),
-        d3.max(dataSet, function(d) { return d.end })
-        ]);
-
-    yScale.domain(dataSet.map(function(d) { return d.title; })); // TODO too many lines
-
     let colorMin = d3.max(dataSet, function(d) {
         return d.start - d.end;
     });
@@ -232,8 +225,6 @@ d3.csv("../data/epidemics.csv").then(function(data) {
         .range(["#ffa600", "#ff7c43", "#f95d6a", "#d45087", "#a05195", "#003f5c"]);
 
     createBars(dataSet);
-
-    performBarsTransition();
 
     let gX = svg.append("g")
         .attr("class", "x axis")
@@ -278,7 +269,7 @@ d3.csv("../data/epidemics.csv").then(function(data) {
             bars.attr("opacity", 0.25);
             d3.select(this).attr("opacity", 1);
             tooltip.html(`Name: <strong>${d.title}</strong><br>
-                 Time Span: <strong>${d.span} Year(s)</strong><br>
+                 Time Span: <strong>${d.span} ${+d.span === 1 ? "Year" : "Years"}</strong><br>
                  Death Toll: <strong>${tollFormat(d.toll === 0 ? "Unknown" : d.toll)}</strong>
                 `)
                 .style('top', d3.event.pageY + 16 + 'px')
@@ -289,6 +280,8 @@ d3.csv("../data/epidemics.csv").then(function(data) {
             bars.attr("opacity", 1);
         });
     }
+
+    drawSince("basedOnInput");
 
     function drawSort(sort) {
 
