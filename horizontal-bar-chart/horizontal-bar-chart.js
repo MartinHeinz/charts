@@ -50,6 +50,25 @@ let xTitle = svg.append("text")
     .attr("x", (margin.left + (width - margin.right))/2)
     .text("Time (Years)");
 
+function range(start, end, increment) {
+    let array = [];
+    let current = start;
+
+    increment = increment || 1;
+    if (increment > 0) {
+        while (current <= end) {
+            array.push(current);
+            current += increment;
+        }
+    } else {
+        while (current >= end) {
+            array.push(current);
+            current += increment;
+        }
+    }
+    return array;
+}
+
 d3.csv("../data/epidemics.csv").then(function(data) {
 
     data.forEach(function(d) {
@@ -95,14 +114,16 @@ d3.csv("../data/epidemics.csv").then(function(data) {
 
     yScale.domain(dataSet.map(function(d) { return d.title; })); // TODO too many lines
 
+    let colorMin = d3.max(dataSet, function(d) {
+        return d.start - d.end;
+    });
+    let colorMax = d3.min(dataSet, function(d) {
+        return d.start - d.end;
+    });
+    let colorRange = range(colorMin, colorMax, (colorMax/4)).map(x => Math.round(x)).reverse();
     let colors = d3.scaleLinear()
-        .domain([d3.max(dataSet, function(d) {
-            return d.start - d.end;
-        }), d3.min(dataSet, function(d) {
-            return d.start - d.end;
-        })])
-        .range(["#2c7bb6", "#d7191c"])
-        .interpolate(d3.interpolateHcl);
+        .domain(colorRange)
+        .range(["#ffa600", "#f95d6a", "#a05195", "#2f4b7c"]);
 
     let bars = svg.selectAll(".myBars")
         .data(dataSet)
@@ -159,12 +180,22 @@ d3.csv("../data/epidemics.csv").then(function(data) {
 
     gradient.append("stop")
         .attr("offset", "0%")
-        .attr("stop-color", "#2c7bb6")
+        .attr("stop-color", "#2f4b7c")
+        .attr("stop-opacity", 1);
+
+    gradient.append("stop")
+        .attr("offset", "33%")
+        .attr("stop-color", "#a05195")
+        .attr("stop-opacity", 1);
+
+    gradient.append("stop")
+        .attr("offset", "75%")
+        .attr("stop-color", "#f95d6a")
         .attr("stop-opacity", 1);
 
     gradient.append("stop")
         .attr("offset", "100%")
-        .attr("stop-color", "#d7191c")
+        .attr("stop-color", "#ffa600")
         .attr("stop-opacity", 1);
 
     let rectSize = 100;
