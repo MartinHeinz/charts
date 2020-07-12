@@ -1,4 +1,4 @@
-let width = 1000, height = 3000;
+let width = 1000, height = 2962;
 
 let margin = ({top: 26, right: 20, bottom: 86, left: 100});
 
@@ -113,6 +113,8 @@ d3.csv("../data/epidemics.csv").then(function(data) {
         ]);
 
     yScale.domain(dataSet.map(function(d) { return d.title; })); // TODO too many lines
+
+    console.log(yScale.bandwidth());
 
     let colorMin = d3.max(dataSet, function(d) {
         return d.start - d.end;
@@ -338,6 +340,16 @@ d3.csv("../data/epidemics.csv").then(function(data) {
         bars.data(dataSet);
         bars.exit().remove();
 
+        height = Math.ceil(dataSet.length*12);
+
+        yScale = d3.scaleBand()
+            .range([margin.top, height - margin.bottom])
+            .paddingInner(0.4)
+            .paddingOuter(0.4);
+
+        yAxis = d3.axisLeft(yScale)
+            .tickSizeOuter(0)
+            .tickSizeInner(0);
 
         yScale.domain(dataSet.map(function(d) { return d.title; }));
 
@@ -346,7 +358,7 @@ d3.csv("../data/epidemics.csv").then(function(data) {
         bars.transition()
             .duration(1000)
             .attr("x", function(d) { return xScale(d.start); })
-            .attr("y", function(d) { return yScale(d.title);})
+            .attr("y", function(d) { return yScale(d.title); })
             .attr("width", function(d) { return xScale(d.end) - xScale(d.start);})
             .attr("height", yScale.bandwidth())
             .attr("rx", 4)
@@ -374,6 +386,31 @@ d3.csv("../data/epidemics.csv").then(function(data) {
         }).on("mouseout", function() {
             tt.style("opacity", 0)
         });
+
+
+        svg.attr("height", height);
+        d3.select("#svganchor")
+            .attr("height", height);
+
+        d3.axisBottom(xScale)
+            .tickSizeInner(-(height - margin.top - margin.bottom));
+
+        xTitle.attr("y", (height - margin.bottom) + 34);
+
+        gX.attr("transform", "translate(0," + (height - margin.bottom) + ")");
+
+        legend.attr("x", (margin.left + (width - margin.right)) / 2)
+            .attr("y", height - 24);
+
+
+        minLegend.attr("y", height - 13);
+
+        maxLegend.attr("x", ((margin.left + (width - margin.right))/2) + rectSize + 4)
+            .attr("y", height - 13);
+
+        colorRect
+            .attr("x", ((margin.left + (width - margin.right)) / 2) - rectSize)
+            .attr("y", height - 20);
 
     }
 
