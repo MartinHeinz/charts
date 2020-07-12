@@ -311,8 +311,12 @@ d3.csv("../data/epidemics.csv").then(function(data) {
                 ]);
         }
 
-        bars.data(dataSet);
-        bars.exit().remove();
+        bars.data([]).exit().remove();  // Remove all rows
+
+        bars = svg.selectAll(".myBars")  // Add all currently selected rows back in
+            .data(dataSet)
+            .enter()
+            .append("rect");
 
         height = Math.ceil(dataSet.length*12);
 
@@ -357,6 +361,21 @@ d3.csv("../data/epidemics.csv").then(function(data) {
                 .style("opacity", 1);
         }).on("mouseout", function() {
             tt.style("opacity", 0)
+        });
+
+        bars.on("mousemove", function(d) {
+            bars.attr("opacity", 0.25);
+            d3.select(this).attr("opacity", 1);
+            tt.html(`Name: <strong>${d.title}</strong><br>
+                 Time Span: <strong>${d.span}</strong><br>
+                 Death Toll: <strong>${d.toll === 0 ? "Unknown" : d.toll}</strong>
+                `)
+                .style('top', d3.event.pageY + 16 + 'px')
+                .style('left', d3.event.pageX - 30 + 'px')
+                .style("opacity", 1);
+        }).on("mouseout", function() {
+            tt.style("opacity", 0);
+            bars.attr("opacity", 1);
         });
 
         svg.attr("height", height);
