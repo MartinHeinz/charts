@@ -151,10 +151,6 @@ d3.csv("../data/epidemics.csv").then(function(data) {
         .attr("transform", "translate(" + margin.left + ",0)")
         .call(yAxis);
 
-    d3.selectAll(".tick line")
-        .filter(function (d) { return d === 0;  })
-        .remove();
-
     gX.lower();
 
     d3.selectAll(".y.axis text").on("mousemove", function(d) {
@@ -254,8 +250,6 @@ d3.csv("../data/epidemics.csv").then(function(data) {
         let thisClicked = this.value;
         drawSince(thisClicked);
     });
-
-    d3.selectAll(".boundaryLine").attr("opacity", 0);
 
     function drawSort(sort) {
 
@@ -380,7 +374,6 @@ d3.csv("../data/epidemics.csv").then(function(data) {
         }).on("mouseout", function() {
             tt.style("opacity", 0)
         });
-
 
         svg.attr("height", height);
         d3.select("#svganchor")
