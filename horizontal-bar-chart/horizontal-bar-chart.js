@@ -16,6 +16,7 @@ let colorRect;
 let legend;
 let minLegend;
 let maxLegend;
+let tollFormat = d3.format(",.2r");
 
 function performYAxisTransition() {
 
@@ -91,13 +92,15 @@ function createLegend() {
         .attr("x", (margin.left + (width - margin.right)) / 2)
         .attr("y", height - 24)
         .attr("class", "legend")
-        .text("color legend");
+        .attr("font-family", "Lato")
+        .text("Color legend");
 
     minLegend = svg.append("text")
         .attr("text-anchor", "end")
         .attr("x", ((margin.left + (width - margin.right)) / 2) - rectSize - 4)
         .attr("y", height - 13)
         .attr("class", "legend")
+        .attr("font-family", "Lato")
         .text("Minimum");
 
     maxLegend = svg.append("text")
@@ -105,6 +108,7 @@ function createLegend() {
         .attr("x", ((margin.left + (width - margin.right)) / 2) + rectSize + 4)
         .attr("y", height - 13)
         .attr("class", "legend")
+        .attr("font-family", "Lato")
         .text("Maximum");
 }
 
@@ -147,6 +151,7 @@ let xTitle = svg.append("text")
     .attr("text-anchor", "middle")
     .attr("y", (height - margin.bottom) + 34)
     .attr("x", (margin.left + (width - margin.right)) / 2)
+    .attr("font-family", "Lato")
     .text("Time (Years)");
 
 function range(start, end, increment) {
@@ -273,8 +278,8 @@ d3.csv("../data/epidemics.csv").then(function(data) {
             bars.attr("opacity", 0.25);
             d3.select(this).attr("opacity", 1);
             tooltip.html(`Name: <strong>${d.title}</strong><br>
-                 Time Span: <strong>${d.span}</strong><br>
-                 Death Toll: <strong>${d.toll === 0 ? "Unknown" : d.toll}</strong>
+                 Time Span: <strong>${d.span} Year(s)</strong><br>
+                 Death Toll: <strong>${tollFormat(d.toll === 0 ? "Unknown" : d.toll)}</strong>
                 `)
                 .style('top', d3.event.pageY + 16 + 'px')
                 .style('left', d3.event.pageX - 30 + 'px')
