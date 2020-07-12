@@ -1,6 +1,6 @@
 let width = 1000, height = 2962;
 
-let margin = ({top: 26, right: 20, bottom: 86, left: 100});
+let margin = ({top: 0, right: 20, bottom: 86, left: 250});
 
 let xScale = d3.scaleLinear()
     .range([margin.left, width - margin.right]);
@@ -36,12 +36,12 @@ let svg = d3.select("#svganchor")
 let inputFrom = d3.select("#from");
 let inputTo = d3.select("#to");
 
-let chartTitle = svg.append("text")
-    .attr("class", "chartTitle")
-    .attr("text-anchor", "middle")
-    .attr("y", 16)
-    .attr("x", (margin.left + (width - margin.right))/2)
-    .text("Epidemics");
+// let chartTitle = svg.append("text")
+//     .attr("class", "chartTitle")
+//     .attr("text-anchor", "middle")
+//     .attr("y", 16)
+//     .attr("x", (margin.left + (width - margin.right))/2)
+//     .text("Epidemics");
 
 let xTitle = svg.append("text")
     .attr("class", "axisTitle")
@@ -95,7 +95,7 @@ d3.csv("../data/epidemics.csv").then(function(data) {
         }
         else {
             d.start = +span;
-            d.end = +span;
+            d.end = (+span)+1;
             d.span = 1;
         }
 
@@ -113,8 +113,6 @@ d3.csv("../data/epidemics.csv").then(function(data) {
         ]);
 
     yScale.domain(dataSet.map(function(d) { return d.title; })); // TODO too many lines
-
-    console.log(yScale.bandwidth());
 
     let colorMin = d3.max(dataSet, function(d) {
         return d.start - d.end;
@@ -335,8 +333,6 @@ d3.csv("../data/epidemics.csv").then(function(data) {
             ]);
         }
 
-        // console.log(dataSet);
-
         bars.data(dataSet);
         bars.exit().remove();
 
@@ -352,8 +348,6 @@ d3.csv("../data/epidemics.csv").then(function(data) {
             .tickSizeInner(0);
 
         yScale.domain(dataSet.map(function(d) { return d.title; }));
-
-        console.log(yScale.bandwidth());
 
         bars.transition()
             .duration(1000)
