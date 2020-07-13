@@ -16,6 +16,8 @@ let colorRect;
 let legend;
 let minLegend;
 let maxLegend;
+let checked = true;
+let input = "basedOnInput";
 let tollFormat = d3.format(",.2r");
 
 function performYAxisTransition() {
@@ -246,8 +248,13 @@ d3.csv("https://martinheinz.github.io/charts/data/epidemics.csv").then(function(
     });
 
     d3.selectAll(".since").on("click", function() {
-        let thisClicked = this.value;
-        drawSince(thisClicked);
+        input = this.value;
+        redraw();
+    });
+
+    d3.select("#checkbox").on("change", function () {
+        checked = !checked;
+        redraw()
     });
 
     createListeners();
@@ -270,7 +277,7 @@ d3.csv("https://martinheinz.github.io/charts/data/epidemics.csv").then(function(
             d3.select(this).attr("opacity", 1);
             tooltip.html(`Name: <strong>${d.title}</strong><br>
                  Time Span: <strong>${d.span} ${+d.span === 1 ? "Year" : "Years"}</strong><br>
-                 Death Toll: <strong>${tollFormat(d.toll === 0 ? "Unknown" : d.toll)}</strong>
+                 Death Toll: <strong>${d.toll === 0 ? "Unknown" : tollFormat(d.toll)}</strong>
                 `)
                 .style('top', d3.event.pageY + 16 + 'px')
                 .style('left', d3.event.pageX - 30 + 'px')
@@ -279,9 +286,10 @@ d3.csv("https://martinheinz.github.io/charts/data/epidemics.csv").then(function(
             tooltip.style("opacity", 0);
             bars.attr("opacity", 1);
         });
+
     }
 
-    drawSince("basedOnInput");
+    redraw();
 
     function drawSort(sort) {
 
@@ -310,20 +318,34 @@ d3.csv("https://martinheinz.github.io/charts/data/epidemics.csv").then(function(
         performYAxisTransition();
     }
 
-    function drawSince(since) {
+    function redraw() {
 
         dataSet = data;
+        let filteredDataset = [];
+        if (checked) {
+            for (const d of data) {
+                if (d.toll !== 0) {
+                    filteredDataset.push(d)
+                }
+            }
+        }
+        else {
+            filteredDataset = data;
+        }
 
-        if(since === "all") {
+        if (input === "all") {
+            if (checked) {
+                dataSet = filteredDataset;
+            }
             xScale.domain([
                 d3.min(dataSet, function(d) { return d.start; }),
                 d3.max(dataSet, function(d) { return d.end; })
             ]);
         }
-        else if(since === "basedOnInput") {
+        else if (input === "basedOnInput") {
             xMin = +inputFrom.property("value");
             dataSet = [];
-            for (const d of data) {
+            for (const d of filteredDataset) {
                 if (d.start < xMin && d.end > xMin) {
                     d.start = xMin;
                 }
@@ -336,6 +358,7 @@ d3.csv("https://martinheinz.github.io/charts/data/epidemics.csv").then(function(
                 +inputTo.property("value"),
                 ]);
         }
+        console.log(dataSet);
 
         bars.data([]).exit().remove();  // Remove all rows
 
@@ -382,6 +405,7 @@ d3.csv("https://martinheinz.github.io/charts/data/epidemics.csv").then(function(
         colorRect.attr("x", ((margin.left + (width - margin.right)) / 2) - rectSize)
                  .attr("y", height - 20);
     }
+
 }).catch(function (error) {
     if (error) throw error;
 });

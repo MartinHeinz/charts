@@ -102,12 +102,29 @@
             padding-right: 5px;
         }
 
+        #checkboxes > * {
+            font-size: 14px;
+            display: inline;
+            padding-top: 5px;
+        }
+
+        #checkboxes {
+            font-size: 14px;
+            display: inline;
+            padding-right: 30px;
+        }
+
 
     </style>
 </head>
 
 <body>
 <div class="centered" style="padding-top: 25px">
+    <div id="checkboxes" class="centered">
+        <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect">
+            <input id="checkbox" type="checkbox" class="mdl-checkbox__input continent" checked="">Known Death Toll Only
+        </label>
+    </div>
     <div class="since-group" data-toggle="buttons-radio">
         <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
             <input class="mdl-textfield__input" type="text" id="from"  value="1875">
