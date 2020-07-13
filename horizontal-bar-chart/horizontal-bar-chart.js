@@ -193,7 +193,7 @@ d3.csv("https://martinheinz.github.io/charts/data/epidemics.csv").then(function(
             if (!span.includes("present")) {
                 let start = +span.split("-")[0];
                 let end = +span.split("-")[1];
-                d.span = end - start;
+                d.span = Math.max(end - start, 1);
             }
             else {
                 d.span = 2020 - +span.split("-")[0];
