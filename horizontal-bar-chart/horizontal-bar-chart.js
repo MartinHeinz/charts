@@ -28,6 +28,15 @@ function performYAxisTransition() {
         .call(yAxis);
 }
 
+
+function performXAxisTransition() {
+
+    svg.transition(svg).select(".x.axis")
+        .transition()
+        .duration(1000)
+        .call(xAxis);
+}
+
 function performBarsTransition() {
 
     bars.transition()
@@ -124,7 +133,6 @@ function updateYScale() {
 function updateYAxis() {
     yAxis = d3.axisLeft(yScale)
         .tickSizeOuter(0)
-        .tickSizeInner(0);
 }
 
 updateYScale();
@@ -358,13 +366,12 @@ d3.csv("https://martinheinz.github.io/charts/data/epidemics.csv").then(function(
                 +inputTo.property("value"),
                 ]);
         }
-        console.log(dataSet);
 
         bars.data([]).exit().remove();  // Remove all rows
 
         createBars(dataSet);  // Add all currently selected rows back in
 
-        height = Math.ceil(dataSet.length*12);
+        height = Math.ceil(dataSet.length * 12);
 
         updateYScale();
         updateYAxis();
@@ -372,12 +379,7 @@ d3.csv("https://martinheinz.github.io/charts/data/epidemics.csv").then(function(
         yScale.domain(dataSet.map(function(d) { return d.title; }));
 
         performBarsTransition();
-
-        svg.transition(svg).select(".x.axis")
-            .transition()
-            .duration(1000)
-            .call(xAxis);
-
+        performXAxisTransition();
         performYAxisTransition();
 
         createListeners();
@@ -385,9 +387,6 @@ d3.csv("https://martinheinz.github.io/charts/data/epidemics.csv").then(function(
         svg.attr("height", height);
         d3.select("#svganchor")
           .attr("height", height);
-
-        d3.axisBottom(xScale)
-          .tickSizeInner(-(height - margin.top - margin.bottom));
 
         xTitle.attr("y", (height - margin.bottom) + 34);
 
@@ -399,7 +398,7 @@ d3.csv("https://martinheinz.github.io/charts/data/epidemics.csv").then(function(
 
         minLegend.attr("y", height - 13);
 
-        maxLegend.attr("x", ((margin.left + (width - margin.right))/2) + rectSize + 4)
+        maxLegend.attr("x", ((margin.left + (width - margin.right)) / 2) + rectSize + 4)
                  .attr("y", height - 13);
 
         colorRect.attr("x", ((margin.left + (width - margin.right)) / 2) - rectSize)
