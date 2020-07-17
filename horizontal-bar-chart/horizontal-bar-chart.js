@@ -22,19 +22,22 @@ let tollFormat = d3.format(",.2r");
 
 function performYAxisTransition() {
 
-    svg.transition(svg).select(".y.axis")
-        .transition()
-        .duration(1000)
-        .call(yAxis);
+    svg.select(".y.axis")
+       .transition()
+       .duration(1000)
+       .call(yAxis);
 }
 
 
 function performXAxisTransition() {
 
-    svg.transition(svg).select(".x.axis")
+    svg.select(".x.axis")
         .transition()
         .duration(1000)
-        .call(xAxis);
+        .call(d3.axisBottom(xScale)
+            .tickSizeInner(-(height - margin.top - margin.bottom))
+            .ticks(15, ".0f")
+            .tickSizeOuter(0));
 }
 
 function performBarsTransition() {
