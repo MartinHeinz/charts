@@ -6,6 +6,7 @@ let xScale = d3.scaleLinear()
     .range([margin.left, width - margin.right]);
 
 let xMin = 0;
+let xMax = 0;
 let rectSize = 100;
 let yScale;
 let yAxis;
@@ -232,7 +233,6 @@ d3.csv("https://martinheinz.github.io/charts/data/epidemics.csv").then(function(
         return d.start - d.end;
     });
     let colorRange = [-90, -75, -45, -25, -8, -5, 0]; // range(colorMin, colorMax, (colorMax/6)).map(x => Math.round(x)).reverse();
-    console.log(colorRange);
     colors = d3.scaleLinear()
         .domain(colorRange)
         .range(["#ffa600", "#ff7c43", "#f95d6a", "#d45087", "#a05195", "#003f5c"]);
@@ -355,12 +355,13 @@ d3.csv("https://martinheinz.github.io/charts/data/epidemics.csv").then(function(
         }
         else if (input === "basedOnInput") {
             xMin = +inputFrom.property("value");
+            xMax = +inputTo.property("value");
             dataSet = [];
             for (const d of filteredDataset) {
                 if (d.start < xMin && d.end > xMin) {
                     d.start = xMin;
                 }
-                if (d.end > xMin) {
+                if (d.end > xMin && d.end <= xMax) {
                     dataSet.push(d)
                 }
             }
