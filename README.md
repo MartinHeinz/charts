@@ -16,6 +16,16 @@ Live Demo: <https://martinheinz.github.io/charts/>
 
 Parsed and cleaned dataset can be found [here](data/who_suicide_stats.csv).
 
+### Horizontal Bar Chart
+
+- Chart Demo: <https://martinheinz.github.io/charts/horizontal-bar-chart/>
+
+- Article: [History of Epidemics in a Single Chart](https://towardsdatascience.com/history-of-epidemics-in-a-single-chart-4aea1804c54e)
+
+- Original data taken from [Wikipedia - List of Epidemics](https://en.wikipedia.org/wiki/List_of_epidemics)
+
+Parsed and cleaned dataset can be found [here](data/epidemics.csv).
+
 ### Parallel Coordinate Chart
 
 Chart Demo: <https://martinheinz.github.io/charts/parallel-coordinates/>
